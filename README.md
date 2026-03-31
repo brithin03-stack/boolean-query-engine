@@ -104,3 +104,7 @@ Result Doc IDs: [1, 3, 4]
 ## Final Note
 
 This project helped me understand how search engines process queries internally, especially how Boolean retrieval and indexing work.
+
+## 🎥 Demo Video
+
+[Download Demo](./demo.mp4.mp4)
