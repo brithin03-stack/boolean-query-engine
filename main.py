@@ -7,8 +7,8 @@ def is_valid_query(query):
     tokens = query.replace("(", " ( ").replace(")", " ) ").split()
 
     operators = {"AND", "OR", "NOT"}
+    balance = 0
     prev = None
-    balance = 0  # for bracket checking
 
     for token in tokens:
         token_upper = token.upper()
@@ -21,16 +21,22 @@ def is_valid_query(query):
             if balance < 0:
                 return False
 
-        # Two operands together → invalid
-        if prev and prev not in operators and token_upper not in operators and token != "(" and prev != ")":
-            return False
+        if prev:
+            # ❌ operand followed by operand (e.g., data science)
+            if prev not in operators and prev != "(" and token_upper not in operators and token != ")":
+                return False
 
-        # Two binary operators together → invalid
-        if prev in {"AND", "OR"} and token_upper in {"AND", "OR"}:
-            return False
+            # ❌ binary operator followed by binary operator
+            if prev in {"AND", "OR"} and token_upper in {"AND", "OR"}:
+                return False
+
+            # ❌ closing bracket followed by operand
+            if prev == ")" and token_upper not in operators and token != ")":
+                return False
 
         prev = token_upper
 
+    # ❌ unbalanced brackets
     if balance != 0:
         return False
 
@@ -52,7 +58,7 @@ def main():
             print("Exiting...")
             break
 
-        # 🔴 Validation step
+        # ✅ Validation step
         if not is_valid_query(query):
             print("Invalid query. Please check syntax.")
             print("-" * 40)
