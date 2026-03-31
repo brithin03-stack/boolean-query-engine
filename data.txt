@@ -1,0 +1,5 @@
+1 data science is fun
+2 physics is hard
+3 data engineering and science
+4 ai and data science
+5 physics and chemistry
